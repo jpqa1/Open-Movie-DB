@@ -1,8 +1,4 @@
-const Movie = (props) => {
-
-    const title = props.title;
-    const poster = props.poster;
-    const year = props.year;
+const Movie = ({title, poster, year}) => {
 
     return (
         <>

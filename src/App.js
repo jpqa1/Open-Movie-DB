@@ -2,32 +2,31 @@ import { useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import MovieContainer from './modules/MovieContainer'
+import SearchBar from './modules/SearchBar';
+import { apiKey } from './constants.json';
 
 
 function App() {
 
-  const [search, setsearch] = useState("");
+  const [search, setSearch] = useState("");
   const [movies, setMovies] = useState([]);
 
   const searchFilms = () => {
-    axios.get("http://www.omdbapi.com/?apikey=335035be&s=" + search)
-      .then(res => setMovies(res.data.Search))
+    axios.get(`http://www.omdbapi.com/?apikey=${apiKey}&s=${search}`)
+      .then(({ data }) => setMovies(data.Search))
       .catch(err => console.log(err));
   }
 
   return (
     <div className="App">
 
-      <label>Search bar of Westeros!</label>
-      <input value={search} onInput={event => setsearch(event.target.value)} />
-      <button onClick={searchFilms}>search</button>
+      <>
+        <SearchBar search={search} setSearch={setSearch} searchFilms={searchFilms} />
+        <MovieContainer movies={movies} />
+      </>
 
-    <>
-    <MovieContainer movies={movies} />
-    </>
-      
     </div>
-    
+
 
 
   );
